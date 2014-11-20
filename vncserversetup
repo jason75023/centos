@@ -1,0 +1,44 @@
+#!/bin/bash
+#setup desktop env in linux centos VM  
+yum -y groupinstall "X Window System" 
+yum -y groupinstall "Desktop" 
+yum -y groupinstall "General Purpose Desktop"
+
+#start desktop env automatically during boot up 
+sed -i '/id:3/s/3/5/p' /etc/inittab
+
+#install vnc server on VM 
+yum -y install tigervnc-server
+
+#install expect for vncserver password setup automatically 
+yum install expect
+
+#setup vncserver password automatically 
+prog=/usr/bin/vncpasswd
+mypass="super007"
+/usr/bin/expect <<EOF
+spawn "$prog"
+expect "Password:"
+send "$mypass\r"
+expect "Verify:"
+send "$mypass\r"
+expect eof
+exit
+EOF
+
+#generate xstartup file and modified 
+vncserver :1
+vncserver -kill :1
+sed -i '/twm/s/^/#/' /root/.vnc/xstartup
+echo "exec gnome-session &" >> /root/.vnc/xstartup
+
+#modify vncserver setup 
+echo "VNCSERVERS=\"1:root\""  >> /etc/sysconfig/vncservers
+echo "VNCSERVERARGS[1]=\"-geometry 1024x768 -depth 24\"" >> /etc/sysconfig/vncservers
+
+#add vncserver as service 
+/sbin/service   vncserver start
+/sbin/service   vncserver stop
+/sbin/chkconfig vncserver on
+/sbin/service  vncserver start
+/sbin/service vncserver status
