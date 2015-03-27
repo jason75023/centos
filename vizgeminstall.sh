@@ -2,7 +2,8 @@
 #
 #usage:
 #1. login to nagios server
-#2.
+#2. bash <(wget -qO - https://raw.githubusercontent.com/jason75023/chef/master/chefbootstrapprep1)
+#
 # To install java agent: 1, 2, 4, 5, 6, 7
 # To uninstall java agent: 5, 3, 7
 # select 8 to exit program 
