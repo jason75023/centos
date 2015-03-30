@@ -1,5 +1,6 @@
 #!/bin/bash
 #
+#Vizgem agent installation on nagios core server  
 #usage:
 #1. login to nagios server
 #2. bash <(wget -qO - https://raw.githubusercontent.com/jason75023/centos/master/vizgeminstall.sh)
