@@ -40,9 +40,8 @@ if [!-d /opt/app/data/ila]; then
     mkdir -p /opt/app/data/ila
 fi
 
-cp ila820lx64.full.tar.Z /opt/app/data/ila
+cp ila820lx64.full.tar /opt/app/data/ila
 cd /opt/app/data/ila
-gunzip ila820lx64.full.tar.gz
 tar xvf ila820lx64.full.tar
 cd /opt/app/data/ila/bin
 /opt/app/data/ila/bin/install
